@@ -18,5 +18,5 @@ export default defineConfig({
       },
     },
   },
-  base: '/dnd-helpers/',
+  base: '/dnd-helpers/'
 });
