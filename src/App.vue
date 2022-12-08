@@ -3,6 +3,7 @@ import { RouterView } from 'vue-router';
 </script>
 
 <template>
+  <RouterView />
   <footer>
     <a href="https://github.com/feliperamis/dnd-helpers">
       <img
@@ -15,15 +16,15 @@ import { RouterView } from 'vue-router';
     </a>
     <span>Felipe Ramis</span>
   </footer>
-  <RouterView />
 </template>
 
 <style lang="scss">
 footer {
   position: fixed;
+  margin-top: 40px;
+  margin-bottom: 40px;
   left: 0;
   bottom: 0;
-  padding-bottom: 20px;
   width: 100%;
   color: #9993b2;
   text-align: center;

@@ -1,6 +1,3 @@
-import type { Ability, AbilityList } from './Ability';
-import { useRouter, useRoute } from 'vue-router';
-
 export class Character {
   constructor(
     public life: number,
@@ -10,25 +7,23 @@ export class Character {
     }
   ) {}
 
-  encode(page: string): string {
-    const router = useRouter();
-    const route = useRoute();
-
-    const link = router.resolve(page);
-    const fullLink = `${window.location.href}${
-      link.name as string
-    }?character=${btoa(JSON.stringify(this))}`;
-    console.log(fullLink);
-
-    return encodeURI(fullLink);
+  encode(): string {
+    return btoa(
+      JSON.stringify({
+        life: this.life,
+        name: this.name,
+        abilityList: this.abilityList,
+      } as CharacterEncoded)
+    );
   }
+
   static fromEncode(encode: string): Character {
-    const data = JSON.parse(atob(encode));
+    const data = JSON.parse(atob(encode)) as CharacterEncoded;
 
     return new Character(
       data.life ?? 1,
       data.name ?? 'Character',
-      data.abilities ?? {}
+      data.abilityList ?? {}
     );
   }
 
@@ -36,3 +31,11 @@ export class Character {
     return new Character(1, 'My Character Name', {});
   }
 }
+
+type CharacterEncoded = {
+  abilityList: {
+    [ability: string]: number;
+  };
+  life: number;
+  name: string;
+};

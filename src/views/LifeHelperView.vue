@@ -53,6 +53,7 @@ onMounted(() => {
             <span>{{ lifeStore.tempLifeCount }}</span>
             <font-awesome-icon
               @click="editingTemp = true"
+              class="clickable-icon"
               icon="pen-to-square"
               color="gray"
             ></font-awesome-icon>
@@ -143,7 +144,6 @@ onMounted(() => {
           margin-left: 6px;
           margin-top: auto;
           margin-bottom: auto;
-          cursor: pointer;
         }
       }
 

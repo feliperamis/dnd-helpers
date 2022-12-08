@@ -1,33 +1,41 @@
 <script setup lang="ts">
 import { Character } from '@/types/Character';
-import { ref, onMounted, computed } from 'vue';
+import type { HelperType } from '@/types/Helpers.type';
+import { ref, computed } from 'vue';
 import { useClipboard } from '@vueuse/core';
+import { useRouter } from 'vue-router';
+
+import CharacterFormVue from '@/components/CharacterForm.vue';
 
 const character = ref(Character.createBasic());
+const router = useRouter();
 
-const newAbilityName = ref('');
-const newAbilitySlots = ref(0);
-const tooltipVisible = ref(false);
-const characterEncodeLife = computed(() =>
-  character.value.encode('life-helper')
-);
-const characterEncodeAbility = computed(() =>
-  character.value.encode('ability-helper')
-);
+const characterEncodeLife = computed(() => getCopyLink('life-helper'));
+const characterEncodeAbility = computed(() => getCopyLink('ability-helper'));
 
-const { text, copy, copied, isSupported } = useClipboard();
+const tooltipsVisible = ref({ 'ability-helper': false, 'life-helper': false });
 
-function copyClipboard(id: string) {
-  copy(character.value.encode(id));
-  tooltipVisible.value = true;
+const { copy } = useClipboard();
+
+function getCopyLink(id: HelperType): string {
+  const link = router.resolve(id);
+  const fullLink = `${window.location.href}${
+    link.name as string
+  }?character=${character.value.encode()}`;
+
+  return encodeURI(fullLink);
+}
+
+function copyClipboard(id: HelperType) {
+  copy(getCopyLink(id));
+  tooltipsVisible.value[id] = true;
   setTimeout(() => {
-    tooltipVisible.value = false;
+    tooltipsVisible.value[id] = false;
   }, 3000);
 }
 
-function addAbility(event: Event) {
-  event.preventDefault();
-  character.value.abilityList[newAbilityName.value] = newAbilitySlots.value;
+function onCharacterChange(data: Character) {
+  character.value = data;
 }
 </script>
 
@@ -36,63 +44,6 @@ function addAbility(event: Event) {
     <img class="logo" src="@/assets/favicon.png" width="200" height="200" />
     <h2>Notion widget builder for D&D</h2>
     <h5>Build a dynamic character sheet on your Notion with these helpers</h5>
-    <div class="content">
-      <div class="character-form">
-        <div>
-          <label for="">Name</label>
-          <input type="text" v-model="character.name" />
-        </div>
-        <div>
-          <label for="">Maximum life</label>
-          <input type="text" v-model="character.life" />
-        </div>
-        <div>
-          <label for="">List of abilities</label>
-          <div v-for="(value, key) in character.abilityList" :key="key">
-            <span>{{ key }}</span>
-            <span>{{ value }}</span>
-          </div>
-          <form @submit="addAbility">
-            <input type="text" v-model="newAbilityName" name="title" />
-            <input
-              type="text"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              max="10"
-              v-model="newAbilitySlots"
-            />
-
-            <button type="submit">Add new ability</button>
-          </form>
-        </div>
-      </div>
-      <div class="widget-links">
-        <div>
-          <input type="text" readonly :value="characterEncodeLife" />
-          <button @click="copyClipboard('life-helper')">
-            <font-awesome-icon icon="clipboard"></font-awesome-icon>
-            <span v-if="tooltipVisible" class="tooltip">Copied!</span>
-          </button>
-          <a :href="characterEncodeLife" target="_blank">
-            <font-awesome-icon
-              icon="arrow-up-right-from-square"
-            ></font-awesome-icon>
-          </a>
-        </div>
-        <div>
-          <input type="text" readonly :value="characterEncodeAbility" />
-          <button @click="copyClipboard('ability-helper')">
-            <font-awesome-icon icon="clipboard"></font-awesome-icon>
-            <span v-if="tooltipVisible" class="tooltip">Copied!</span>
-          </button>
-          <a :href="characterEncodeAbility" target="_blank">
-            <font-awesome-icon
-              icon="arrow-up-right-from-square"
-            ></font-awesome-icon>
-          </a>
-        </div>
-      </div>
-    </div>
     <nav>
       <RouterLink to="/life-helper">
         <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
@@ -104,6 +55,52 @@ function addAbility(event: Event) {
         Ability helper
       </RouterLink>
     </nav>
+    <div class="content">
+      <CharacterFormVue
+        :character="character"
+        @on-character-change="onCharacterChange"
+      />
+      <div class="widget-links">
+        <div>
+          <input
+            class="textinput"
+            type="text"
+            readonly
+            :value="characterEncodeLife"
+          />
+          <button @click="copyClipboard('life-helper')">
+            <font-awesome-icon icon="clipboard"></font-awesome-icon>
+            <span v-if="tooltipsVisible['life-helper']" class="tooltip"
+              >Copied!</span
+            >
+          </button>
+          <a :href="characterEncodeLife" target="_blank">
+            <font-awesome-icon
+              icon="arrow-up-right-from-square"
+            ></font-awesome-icon>
+          </a>
+        </div>
+        <div>
+          <input
+            class="textinput"
+            type="text"
+            readonly
+            :value="characterEncodeAbility"
+          />
+          <button @click="copyClipboard('ability-helper')">
+            <font-awesome-icon icon="clipboard"></font-awesome-icon>
+            <span v-if="tooltipsVisible['ability-helper']" class="tooltip"
+              >Copied!</span
+            >
+          </button>
+          <a :href="characterEncodeAbility" target="_blank">
+            <font-awesome-icon
+              icon="arrow-up-right-from-square"
+            ></font-awesome-icon>
+          </a>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -122,11 +119,29 @@ h2 {
 }
 
 .content {
+  margin-top: 50px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  flex-wrap: wrap;
+
+  .widget-links {
+    flex-grow: 50%;
+
+    button {
+      border-radius: 5px;
+      border: 1px solid rgba(152, 147, 178, 0.3);
+      line-height: 20px;
+      font-size: 14px;
+      padding: 5px 10px;
+      margin: 5px 0;
+      box-shadow: 0 2px 5px rgba(152, 147, 178, 0.3);
+    }
+
+    a {
+      padding: 5px 5px;
+    }
+  }
 }
 
 .tooltip {

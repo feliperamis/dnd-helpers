@@ -18,6 +18,9 @@ import {
   faCircle,
   faClipboard,
   faArrowUpRightFromSquare,
+  faEllipsis,
+  faCirclePlus,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
 import './assets/main.scss';
@@ -32,7 +35,10 @@ library.add(
   faPenToSquare,
   faCircle,
   faClipboard,
-  faArrowUpRightFromSquare
+  faArrowUpRightFromSquare,
+  faEllipsis,
+  faCirclePlus,
+  faTrash
 );
 
 // Register a global custom directive called `v-focus`
