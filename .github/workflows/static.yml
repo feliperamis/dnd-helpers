@@ -21,16 +21,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Generate static files
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-      - run: npm install
-      - run: npm run build      
   # Single deploy job since we're just deploying
   deploy:
     environment:
@@ -40,6 +30,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Generate static files
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Build dist folder
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
