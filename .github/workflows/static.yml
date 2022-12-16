@@ -38,15 +38,15 @@ jobs:
         run: npm install
       - name: Build dist folder
         run: npm run build
-      - name: Copy index to 404 html
-        run: cp dist/index.html dist/404.html
+      #- name: Copy index to 404 html
+      #  run: cp dist/index.html dist/404.html
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './dist'
+          path: './dist/client'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
