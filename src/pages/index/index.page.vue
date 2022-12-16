@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { Character } from '@/types/Character';
 import type { HelperType } from '@/types/Helpers.type';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import CharacterFormVue from '@/components/CharacterForm.vue';
 import { usePageContext } from '#root/renderer/usePageContext';
 
-const pageContext = usePageContext();
 const character = ref(Character.createBasic());
 
 const characterEncodeLife = computed(() => getCopyLink('life-helper'));
@@ -14,9 +13,6 @@ const characterEncodeAbility = computed(() => getCopyLink('ability-helper'));
 const tooltipsVisible = ref({ 'ability-helper': false, 'life-helper': false });
 
 const { copy } = useClipboard();
-
-onMounted(() => {});
-
 function getCopyLink(id: HelperType): string {
   if (typeof window === 'undefined') {
     return '';
@@ -105,12 +101,40 @@ function onCharacterChange(data: Character) {
       </div>
     </div>
   </header>
+
+  <footer>
+    <a href="https://github.com/feliperamis/dnd-helpers">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+        alt="Github
+      icon"
+        width="16"
+        height="16"
+      />
+    </a>
+    <span>Felipe Ramis</span>
+  </footer>
 </template>
 
 <style lang="scss">
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+header {
+  min-height: 400px;
+}
+footer {
+  margin-top: 100px;
+  margin-bottom: 40px;
+  width: 100%;
+  color: #9993b2;
+  text-align: center;
+  display: block;
+
+  a {
+    margin-right: 10px;
+  }
 }
 
 h2 {

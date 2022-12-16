@@ -26,7 +26,8 @@ function addAbility(event: Event) {
   if (
     newAbilityName.value &&
     newAbilitySlots.value &&
-    newAbilitySlots.value > 0
+    newAbilitySlots.value > 0 &&
+    newAbilitySlots.value <= 10
   ) {
     character.value.abilityList[newAbilityName.value] = newAbilitySlots.value;
     newAbilityName.value = '';

@@ -61,9 +61,24 @@ onMounted(() => {
 
 <style lang="scss">
 .ability-helper {
-  width: 40%;
+  width: 50%;
   margin-left: auto;
+  font-size: 20px;
+  vertical-align: middle;
   margin-right: auto;
+
+  @media (max-width: 1200px) {
+    width: 60%;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+    font-size: 16px;
+  }
 
   h5 {
     font-weight: bold;
@@ -93,6 +108,9 @@ onMounted(() => {
         flex: 30%;
         margin-right: 10px;
         font-weight: bold;
+        justify-content: center;
+        align-self: center;
+        padding-bottom: 2px;
       }
 
       &__slots {

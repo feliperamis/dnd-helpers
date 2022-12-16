@@ -95,6 +95,7 @@ onMounted(() => {
     border: 1px solid #e3170a;
     border-radius: 16px;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
     padding: 10px;
