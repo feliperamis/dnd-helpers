@@ -19,5 +19,6 @@ module.exports = {
     'prettier/prettier': 'error',
     // not needed for vue 3
     'vue/no-multiple-template-root': 'off',
+    'vue/multi-word-component-names': 'off',
   },
 };

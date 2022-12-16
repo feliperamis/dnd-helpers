@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Character } from '@/types/Character';
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
   character: {
@@ -14,20 +14,26 @@ const emit = defineEmits<{
 }>();
 const character = ref(props.character);
 
-watch(character, async (oldCharacter, newCharacter) => {
-  emit('on-character-change', newCharacter);
-});
-
 const newAbilityName = ref('');
-const newAbilitySlots = ref(0);
+const newAbilitySlots = ref<number | null>(null);
+
+function onChange() {
+  emit('on-character-change', character.value);
+}
 
 function addAbility(event: Event) {
   event.preventDefault();
-  if (newAbilityName.value && newAbilitySlots.value > 0) {
+  if (
+    newAbilityName.value &&
+    newAbilitySlots.value &&
+    newAbilitySlots.value > 0
+  ) {
     character.value.abilityList[newAbilityName.value] = newAbilitySlots.value;
     newAbilityName.value = '';
     newAbilitySlots.value = 0;
   }
+
+  onChange();
 }
 
 function removeAbility(abilityName: string) {
@@ -39,11 +45,22 @@ function removeAbility(abilityName: string) {
   <div class="character-form">
     <div class="character-form__input">
       <label for="">Name</label>
-      <input class="textinput" type="text" v-model="character.name" />
+      <input
+        class="textinput"
+        type="text"
+        v-model="character.name"
+        @keydown="onChange"
+      />
     </div>
     <div class="character-form__input">
       <label for="">Maximum life</label>
-      <input class="textinput" type="text" v-model.number="character.life" />
+      <input
+        class="textinput"
+        type="number"
+        min="1"
+        v-model.number="character.life"
+        @keydown="onChange"
+      />
     </div>
     <div class="character-form__list">
       <label for="">List of abilities</label>
