@@ -11,7 +11,9 @@ export const useLifeCountStore = defineStore('lifecount', () => {
   }
 
   function setTempLife(tempLife: number) {
-    tempLifeCount.value = tempLife;
+    if (tempLife >= 0) {
+      tempLifeCount.value = tempLife;
+    }
   }
 
   function incrementLife() {

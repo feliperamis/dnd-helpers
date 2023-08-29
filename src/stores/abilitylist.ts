@@ -14,7 +14,6 @@ export const useAbilityListStore = defineStore('abilitylist', () => {
 
   function setAbilities(encodedAbilities: { [ability: string]: number }) {
     const abilities: AbilityList = {};
-    console.log(encodedAbilities);
 
     Object.keys(encodedAbilities).forEach((ability) => {
       abilities[ability] = {
@@ -22,8 +21,6 @@ export const useAbilityListStore = defineStore('abilitylist', () => {
         slots: new Array(encodedAbilities[ability]).fill(false),
       } as Ability;
     });
-
-    console.log(abilities);
 
     abilityList.value = abilities;
   }

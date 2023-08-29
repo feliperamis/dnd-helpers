@@ -1,9 +1,8 @@
 <script setup lang="ts">
-//import TheWelcome from '../components/TheWelcome.vue';
 import { useLifeCountStore } from '@/stores/lifecount';
 import { useCharactersStore } from '@/stores/character';
 import { useUrlSearchParams } from '@vueuse/core';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { StoreService } from '@/services/StoreService';
 
 const lifeStore = useLifeCountStore();
@@ -11,6 +10,17 @@ const characterStore = useCharactersStore();
 const hasCharacter = ref(false);
 const editingTemp = ref(false);
 const inputTemp = ref(null);
+
+const tempValue = computed({
+  get() {
+    return lifeStore.tempLifeCount;
+  },
+  set(newValue) {
+    if (Number.isInteger(newValue)) {
+      lifeStore.setTempLife(newValue);
+    }
+  },
+});
 
 onMounted(() => {
   const params = useUrlSearchParams('history');
@@ -65,7 +75,7 @@ onMounted(() => {
               inputmode="numeric"
               pattern="[0-9]*"
               v-focus
-              v-model.number="lifeStore.tempLifeCount"
+              v-model.number="tempValue"
               @focusout="editingTemp = false"
               @change="editingTemp = false"
             />

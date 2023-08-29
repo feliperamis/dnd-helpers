@@ -1,23 +1,20 @@
 <script setup lang="ts">
 import { Character } from '@/types/Character';
 import type { HelperType } from '@/types/Helpers.type';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import CharacterFormVue from '@/components/CharacterForm.vue';
-import { usePageContext } from '#root/renderer/usePageContext';
 
 const character = ref(Character.createBasic());
-
 const characterEncodeLife = computed(() => getCopyLink('life-helper'));
 const characterEncodeAbility = computed(() => getCopyLink('ability-helper'));
+const { copy } = useClipboard();
 const tooltipsVisible = ref({ 'ability-helper': false, 'life-helper': false });
 
-const { copy } = useClipboard();
 function getCopyLink(id: HelperType): string {
   if (typeof window === 'undefined') {
     return '';
   }
-
   const fullLink = `${
     window.location.href
   }${id}?character=${character.value.encode()}`;
@@ -36,6 +33,10 @@ function copyClipboard(id: HelperType) {
 function onCharacterChange(data: Character) {
   character.value = data;
 }
+
+onMounted(() => {
+  character.value.life = 1; //Force computed values to be filled with the new link
+});
 </script>
 
 <template>
@@ -44,15 +45,15 @@ function onCharacterChange(data: Character) {
     <h2>Notion widget builder for D&D</h2>
     <h5>Build a dynamic character sheet on your Notion with these helpers</h5>
     <nav>
-      <RLink path="life-helper">
+      <a :href="characterEncodeLife">
         <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
-        Life helper
-      </RLink>
+        <span>Life helper</span>
+      </a>
       |
-      <RLink path="ability-helper">
+      <a :href="characterEncodeAbility">
         <font-awesome-icon icon="list-check" color="purple"></font-awesome-icon>
-        Ability helper
-      </RLink>
+        <span>Ability helper</span>
+      </a>
     </nav>
     <div class="content">
       <CharacterFormVue
@@ -113,6 +114,12 @@ function onCharacterChange(data: Character) {
       />
     </a>
     <span>Felipe Ramis</span>
+    <a
+      class="credits"
+      href="https://www.flaticon.com/free-icons/d20"
+      title="d20 icons"
+      ><i>D20 icons created by Freepik - Flaticon</i></a
+    >
   </footer>
 </template>
 
@@ -134,6 +141,14 @@ footer {
 
   a {
     margin-right: 10px;
+  }
+
+  .credits {
+    display: block;
+    padding: 1rem;
+    border-left: 1px solid var(--color-border);
+    text-decoration: none;
+    color: #9993b2;
   }
 }
 
@@ -212,6 +227,10 @@ nav {
     &:hover {
       text-decoration: underline;
     }
+
+    span {
+      margin-left: 5px;
+    }
   }
 }
 
@@ -221,9 +240,6 @@ nav a.router-link-exact-active {
 
 nav a.router-link-exact-active:hover {
   background-color: transparent;
-}
-
-nav a {
 }
 
 nav a:first-of-type {

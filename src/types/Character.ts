@@ -28,7 +28,7 @@ export class Character {
   }
 
   static createBasic(): Character {
-    return new Character(1, 'My Character Name', {});
+    return new Character(0, "My Character's name", {});
   }
 }
 
