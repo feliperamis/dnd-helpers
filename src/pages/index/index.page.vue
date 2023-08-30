@@ -44,17 +44,16 @@ onMounted(() => {
     <img class="logo" src="@/assets/favicon.png" width="200" height="200" />
     <h2>Notion widget builder for D&D</h2>
     <h5>Build a dynamic character sheet on your Notion with these helpers</h5>
-    <nav>
+    <div class="nav">
       <a :href="characterEncodeLife">
         <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
-        <!--<h3>Life helper</h3>-->
-        Life helper
+        <h3>Life helper</h3>
       </a>
       <a :href="characterEncodeAbility">
         <font-awesome-icon icon="list-check" color="purple"></font-awesome-icon>
-        <!--<h3>Ability helper</h3>-->
+        <h3>Ability helper</h3>
       </a>
-    </nav>
+    </div>
     <div class="content">
       <CharacterFormVue
         :character="character"
@@ -209,7 +208,7 @@ h2 {
   z-index: 1;
 }
 
-nav {
+.nav {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
