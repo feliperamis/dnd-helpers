@@ -68,7 +68,9 @@ onMounted(() => {
       />
       <div class="widget-links">
         <div>
-          <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
+          <ClientOnlyVue>
+            <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
+          </ClientOnlyVue>
           <input
             class="textinput"
             type="text"
@@ -88,10 +90,12 @@ onMounted(() => {
           </a>
         </div>
         <div>
-          <font-awesome-icon
-            icon="list-check"
-            color="purple"
-          ></font-awesome-icon>
+          <ClientOnlyVue>
+            <font-awesome-icon
+              icon="list-check"
+              color="purple"
+            ></font-awesome-icon>
+          </ClientOnlyVue>
           <input
             class="textinput"
             type="text"
@@ -183,6 +187,11 @@ h2 {
     margin-top: 10px;
     flex-direction: column;
     flex-grow: 40%;
+
+    input {
+      margin-left: 5px;
+    }
+
     button {
       border-radius: 5px;
       border: 1px solid rgba(152, 147, 178, 0.3);
