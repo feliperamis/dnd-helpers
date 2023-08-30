@@ -4,6 +4,7 @@ import type { HelperType } from '@/types/Helpers.type';
 import { ref, computed, onMounted } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import CharacterFormVue from '@/components/CharacterForm.vue';
+import ClientOnlyVue from '@/components/ClientOnly.vue';
 
 const character = ref(Character.createBasic());
 const characterEncodeLife = computed(() => getCopyLink('life-helper'));
@@ -44,7 +45,7 @@ onMounted(() => {
     <img class="logo" src="@/assets/favicon.png" width="200" height="200" />
     <h2>Notion widget builder for D&D</h2>
     <h5>Build a dynamic character sheet on your Notion with these helpers</h5>
-    <Suspense>
+    <ClientOnlyVue>
       <nav>
         <a :href="characterEncodeLife">
           <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
@@ -58,7 +59,7 @@ onMounted(() => {
           <h3>Ability helper</h3>
         </a>
       </nav>
-    </Suspense>
+    </ClientOnlyVue>
 
     <div class="content">
       <CharacterFormVue
