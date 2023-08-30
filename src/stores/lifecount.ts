@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { useSessionStorage } from '@vueuse/core';
+import { useLocalStorage, useSessionStorage } from '@vueuse/core';
 
-const lifeCount = useSessionStorage('life-count', 0);
-const maxLifeCount = useSessionStorage('max-life-count', 0);
-const tempLifeCount = useSessionStorage('temp-life-count', 0);
+const lifeCount = useLocalStorage('life-count', 0);
+const maxLifeCount = useLocalStorage('max-life-count', 0);
+const tempLifeCount = useLocalStorage('temp-life-count', 0);
 export const useLifeCountStore = defineStore('lifecount', () => {
   function setLife(life: number) {
     lifeCount.value = life;

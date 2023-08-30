@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
-import { useSessionStorage } from '@vueuse/core';
+import { useLocalStorage, useSessionStorage } from '@vueuse/core';
 import type { Ability, AbilityList } from '@/types/Ability';
 
-const abilityList = useSessionStorage('ability-list', {} as AbilityList);
+const abilityList = useLocalStorage('ability-list', {} as AbilityList);
 
 export const useAbilityListStore = defineStore('abilitylist', () => {
   function addAbility(name: string, slots: number) {

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import { useSessionStorage } from '@vueuse/core';
+import { useLocalStorage, useSessionStorage } from '@vueuse/core';
 
-const character = useSessionStorage('character', '');
+const character = useLocalStorage('character', '');
 
 export const useCharactersStore = defineStore('character', () => {
   function setCharacter(newName: string) {
@@ -11,6 +11,7 @@ export const useCharactersStore = defineStore('character', () => {
   function isCharacterInStore(characterName: string): boolean {
     return character.value === characterName;
   }
+
   return {
     character,
     setCharacter,

@@ -47,12 +47,11 @@ onMounted(() => {
     <nav>
       <a :href="characterEncodeLife">
         <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
-        <span>Life helper</span>
+        <h3>Life helper</h3>
       </a>
-      |
       <a :href="characterEncodeAbility">
         <font-awesome-icon icon="list-check" color="purple"></font-awesome-icon>
-        <span>Ability helper</span>
+        <h3>Ability helper</h3>
       </a>
     </nav>
     <div class="content">
@@ -163,13 +162,15 @@ h2 {
 .content {
   margin-top: 50px;
   display: flex;
+  width: 100%;
   flex-direction: row;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
 
   .widget-links {
-    flex-grow: 50%;
-
+    margin-top: 10px;
+    flex-direction: column;
+    flex-grow: 40%;
     button {
       border-radius: 5px;
       border: 1px solid rgba(152, 147, 178, 0.3);
@@ -228,9 +229,19 @@ nav {
       text-decoration: underline;
     }
 
-    span {
-      margin-left: 5px;
+    h3 {
+      padding: 0;
+      display: inline-flex;
+      margin-left: 10px;
+      color: #fff;
+      text-decoration: inherit;
+      font-size: 18px;
     }
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+    margin: 1;
   }
 }
 
