@@ -68,6 +68,7 @@ onMounted(() => {
       />
       <div class="widget-links">
         <div>
+          <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
           <input
             class="textinput"
             type="text"
@@ -87,6 +88,10 @@ onMounted(() => {
           </a>
         </div>
         <div>
+          <font-awesome-icon
+            icon="list-check"
+            color="purple"
+          ></font-awesome-icon>
           <input
             class="textinput"
             type="text"
