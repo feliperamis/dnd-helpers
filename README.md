@@ -1,46 +1,65 @@
-# dnd-helpers
+# Notion D&D Widgets
 
-This template should help get you started developing with Vue 3 in Vite.
+🗒️ Version: 1.0.0
 
-## Recommended IDE Setup
+🔗 https://feliperamis.github.io/dnd-helpers/
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+![Landing page](docs/landing.png)
 
-## Type Support for `.vue` Imports in TS
+This repository has the purpose of creating small Notion widgets (embedded pages) to enhance a D&D play sheet.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## Widgets
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+There are 2 widgets:
 
-## Customize configuration
+- **Life widget**: Control your HP, Maximum HP and Temporal HP by healing or damaging your character by 1 point
+- **Abilities widget**: List of abilities you character may have and control whether you used them or not. Its main purpose is to cover all of the daily usage abilities that can only be recovered by a long rest but you can use it even for spell slots.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## How to use
 
-## Project Setup
+1. Create your character
+
+![Widget builder](docs/widget_builder.gif)
+
+2. Embed the widgets to your Notion page
+
+![Notion embed setup](docs/notion.gif)
+
+
+## ⚠️⚠️Caveats
+
+This widgets use the local storage of your device. In a browser environment it works perfectly fine but if you use the Notion desktop/mobile/Ipad app it may not keep your data saved. 
+
+## Future
+
+In case this widgets are used, I have in mind some features to add like:
+
+- Death save widget
+- Spell slots widget
+- Hit dices and short rest
+- Edit character
+- Progress bar for the life helper
+
+
+# Development
+
+## How to setup project
+
+This project was made by Vue.js 3  and Vite SSG (Static site generator) with the prerender option of Vite ([More info here](https://vite-plugin-ssr.com/pre-rendering)).
 
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
+#### Lint with [ESLint](https://eslint.org/)
 
 ```sh
 npm run lint
 ```
+
+#### Deploy
+
+Every push to the main branch will create a deployment to Github pages thanks to the Github workflows.
