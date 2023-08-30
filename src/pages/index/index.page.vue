@@ -47,11 +47,12 @@ onMounted(() => {
     <nav>
       <a :href="characterEncodeLife">
         <font-awesome-icon icon="heart" color="red"></font-awesome-icon>
-        <h3>Life helper</h3>
+        <!--<h3>Life helper</h3>-->
+        Life helper
       </a>
       <a :href="characterEncodeAbility">
         <font-awesome-icon icon="list-check" color="purple"></font-awesome-icon>
-        <h3>Ability helper</h3>
+        <!--<h3>Ability helper</h3>-->
       </a>
     </nav>
     <div class="content">
@@ -243,10 +244,6 @@ nav {
     width: 80%;
     margin: 1;
   }
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
 }
 
 nav a.router-link-exact-active:hover {

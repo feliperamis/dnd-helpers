@@ -172,36 +172,6 @@ function removeAbility(abilityName: string) {
     &__table__new td {
       background-color: rgb(239, 239, 239);
     }
-    /*
-    &__table {
-      margin-top: 5px;
-      border-collapse: collapse;
-      border-radius: 3px;
-      font-size: 0.9em;
-      font-family: sans-serif;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-
-      thead tr {
-        border-radius: 3px;
-        background-color: #b5b7d6;
-        color: #ffffff;
-        text-align: left;
-      }
-
-      th,
-      td {
-        padding: 12px 15px;
-      }
-
-      tbody tr {
-        border-bottom: 1px solid #dddddd;
-      }
-
-      tbody tr:last-of-type {
-        background-color: rgba(152, 147, 178, 0.3);
-      }
-    }
-    */
 
     table {
       border: 1px solid #ccc;
